@@ -8,6 +8,7 @@
     const endpointBase = 'https://generativelanguage.googleapis.com/v1beta/models';
 
     const elems = {
+        themeToggleBtn: document.getElementById('themeToggleBtn'),
         modelSelector: document.getElementById('modelSelector'),
         aliasInput: document.getElementById('keyAlias'),
         keyInput: document.getElementById('keyInput'),
@@ -49,9 +50,13 @@
     }
 
     function loadState() {
+        const preferredTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'dark'
+            : 'light';
         const defaults = {
             appVersion: APP_VERSION,
             model: 'gemini-2.5-flash',
+            theme: preferredTheme,
             keys: []
         };
 
@@ -68,6 +73,7 @@
         return {
             appVersion: APP_VERSION,
             model: parsed.model || defaults.model,
+            theme: parsed.theme || defaults.theme,
             keys: Array.isArray(parsed.keys) ? parsed.keys : []
         };
     }
@@ -122,10 +128,11 @@
         if (!elems.connectionState) {
             return;
         }
+        const computed = getComputedStyle(document.body);
         elems.connectionState.textContent = navigator.onLine ? 'Online' : 'Offline';
         elems.connectionState.style.background = navigator.onLine
-            ? 'rgba(46, 204, 113, 0.24)'
-            : 'rgba(231, 76, 60, 0.24)';
+            ? computed.getPropertyValue('--status-bg-online').trim()
+            : computed.getPropertyValue('--status-bg-offline').trim();
         if (!navigator.onLine) {
             setStatus('You are offline. Data is still available from local storage + history cache.');
         } else if (!elems.statusEl.textContent) {
@@ -208,6 +215,36 @@
 
     function setModelFromState() {
         elems.modelSelector.value = state.model || 'gemini-2.5-flash';
+    }
+
+    function normalizeTheme(theme) {
+        if (theme !== 'light' && theme !== 'dark') {
+            return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        }
+        return theme;
+    }
+
+    function setTheme(theme) {
+        state.theme = normalizeTheme(theme);
+        document.body.classList.remove('theme-light', 'theme-dark');
+        document.body.classList.add(`theme-${state.theme}`);
+
+        const nextTheme = state.theme === 'dark' ? 'light' : 'dark';
+        if (elems.themeToggleBtn) {
+            elems.themeToggleBtn.textContent = `Theme: ${nextTheme === 'dark' ? 'Dark' : 'Light'}`;
+            elems.themeToggleBtn.setAttribute('data-theme-target', nextTheme);
+        }
+
+        const themeColor = state.theme === 'dark' ? '#0f172a' : '#f8fafc';
+        const themeMeta = document.querySelector('meta[name="theme-color"]');
+        if (themeMeta) {
+            themeMeta.setAttribute('content', themeColor);
+        }
+    }
+
+    function applyThemeFromState() {
+        state.theme = normalizeTheme(state.theme);
+        setTheme(state.theme);
     }
 
     function collectCheckedIds() {
@@ -472,6 +509,7 @@
         elems.bulkKeys.value = '';
         elems.aliasInput.value = '';
         elems.keyInput.value = '';
+        applyThemeFromState();
         syncToggleAllState();
         await clearHistory();
         setModelFromState();
@@ -526,8 +564,16 @@
     }
 
     function bindEvents() {
+        elems.themeToggleBtn?.addEventListener('click', () => {
+            const next = elems.themeToggleBtn.getAttribute('data-theme-target') || 'light';
+            setTheme(next);
+            saveState();
+        });
+
         elems.modelSelector.addEventListener('change', () => {
-            state.model = elems.modelSelector.value;
+            const selectedModel = String(elems.modelSelector.value || '').trim();
+            state.model = selectedModel || 'gemini-2.5-flash';
+            elems.modelSelector.value = state.model;
             saveState();
             renderKeys();
         });
@@ -629,6 +675,7 @@
     async function boot() {
         migrateState();
         setModelFromState();
+        applyThemeFromState();
         renderKeys();
         registerServiceWorker();
         await renderHistory();

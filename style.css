@@ -4,12 +4,91 @@
     box-sizing: border-box;
 }
 
+:root {
+    --page-bg: radial-gradient(circle at 10% 20%, rgb(111, 111, 213) 0%, rgb(16, 18, 117) 90.1%);
+    --text-main: #f5f5f7;
+    --text-soft: rgba(255, 255, 255, 0.9);
+    --text-soft-2: rgba(255, 255, 255, 0.78);
+    --text-soft-3: rgba(255, 255, 255, 0.76);
+    --sidebar-bg: rgba(8, 11, 35, 0.85);
+    --sidebar-border: rgba(255, 255, 255, 0.14);
+    --panel-bg: rgba(255, 255, 255, 0.1);
+    --panel-border: rgba(255, 255, 255, 0.2);
+    --panel-shadow: 0 8px 24px rgba(4, 8, 22, 0.15);
+    --input-bg: rgba(255, 255, 255, 0.08);
+    --input-border: rgba(255, 255, 255, 0.25);
+    --input-focus-bg: rgba(255, 255, 255, 0.16);
+    --input-focus-border: rgba(255, 255, 255, 0.55);
+    --input-text: #fff;
+    --input-placeholder: rgba(255, 255, 255, 0.62);
+    --button-primary-bg: rgba(255, 255, 255, 0.95);
+    --button-primary-text: #111;
+    --button-secondary-bg: rgba(255, 255, 255, 0.16);
+    --button-secondary-border: rgba(255, 255, 255, 0.35);
+    --button-secondary-text: #fff;
+    --button-danger-bg: rgba(234, 67, 53, 0.86);
+    --button-danger-text: #fff;
+    --badge-bg: rgba(255, 255, 255, 0.16);
+    --badge-border: rgba(255, 255, 255, 0.2);
+    --badge-text: rgba(255, 255, 255, 0.9);
+    --table-head-bg: rgba(20, 24, 48, 0.9);
+    --table-border: rgba(255, 255, 255, 0.14);
+    --table-text: rgba(255, 255, 255, 0.92);
+    --table-text-muted: rgba(255, 255, 255, 0.76);
+    --status-bg-online: rgba(46, 204, 113, 0.24);
+    --status-bg-offline: rgba(231, 76, 60, 0.24);
+    --result-alive-bg: rgba(46, 204, 113, 0.2);
+    --result-alive-border: rgba(46, 204, 113, 0.45);
+    --result-dead-bg: rgba(231, 76, 60, 0.2);
+    --result-dead-border: rgba(231, 76, 60, 0.45);
+    --theme-color: #0f172a;
+}
+
+body.theme-light {
+    --page-bg: radial-gradient(circle at 10% 20%, #eff2ff 0%, #dce6ff 90.1%);
+    --text-main: #0f172a;
+    --text-soft: rgba(15, 23, 42, 0.9);
+    --text-soft-2: rgba(15, 23, 42, 0.8);
+    --text-soft-3: rgba(15, 23, 42, 0.72);
+    --sidebar-bg: #ffffff;
+    --sidebar-border: rgba(15, 23, 42, 0.1);
+    --panel-bg: #ffffff;
+    --panel-border: rgba(15, 23, 42, 0.12);
+    --panel-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    --input-bg: #fff;
+    --input-border: rgba(15, 23, 42, 0.2);
+    --input-focus-bg: #fff;
+    --input-focus-border: rgba(15, 23, 42, 0.5);
+    --input-text: #111827;
+    --input-placeholder: rgba(15, 23, 42, 0.55);
+    --button-primary-bg: #0f172a;
+    --button-primary-text: #f8fafc;
+    --button-secondary-bg: #f1f5f9;
+    --button-secondary-border: rgba(15, 23, 42, 0.15);
+    --button-secondary-text: #111827;
+    --button-danger-bg: #dc2626;
+    --button-danger-text: #fff;
+    --badge-bg: rgba(15, 23, 42, 0.08);
+    --badge-border: rgba(15, 23, 42, 0.2);
+    --badge-text: rgba(15, 23, 42, 0.9);
+    --table-head-bg: #f8fafc;
+    --table-border: rgba(15, 23, 42, 0.12);
+    --table-text: rgba(15, 23, 42, 0.92);
+    --table-text-muted: rgba(15, 23, 42, 0.72);
+    --status-bg-online: rgba(16, 185, 129, 0.24);
+    --status-bg-offline: rgba(248, 113, 113, 0.24);
+    --result-alive-bg: rgba(16, 185, 129, 0.12);
+    --result-alive-border: rgba(16, 185, 129, 0.35);
+    --result-dead-bg: rgba(248, 113, 113, 0.12);
+    --result-dead-border: rgba(248, 113, 113, 0.35);
+    --theme-color: #f8fafc;
+}
+
 body {
     font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
     min-height: 100vh;
-    background: #f0f2f5;
-    background-image: radial-gradient(circle at 10% 20%, rgb(111, 111, 213) 0%, rgb(16, 18, 117) 90.1%);
-    color: #f5f5f7;
+    background: var(--page-bg);
+    color: var(--text-main);
 }
 
 .app-shell {
@@ -21,9 +100,9 @@ body {
 
 .admin-sidebar {
     padding: 28px 24px;
-    background: rgba(8, 11, 35, 0.85);
+    background: var(--sidebar-bg);
     backdrop-filter: blur(8px);
-    border-right: 1px solid rgba(255, 255, 255, 0.14);
+    border-right: 1px solid var(--sidebar-border);
     position: sticky;
     top: 0;
     height: 100vh;
@@ -33,10 +112,11 @@ body {
     font-size: 28px;
     font-weight: 600;
     margin-bottom: 12px;
+    color: var(--text-main);
 }
 
 .admin-sidebar .muted {
-    color: rgba(255, 255, 255, 0.78);
+    color: var(--text-soft-2);
     font-size: 13px;
     margin-bottom: 24px;
     line-height: 1.45;
@@ -50,7 +130,7 @@ body {
 
 .sidebar-footer {
     margin-top: 24px;
-    color: rgba(255, 255, 255, 0.74);
+    color: var(--text-soft-3);
     font-size: 12px;
 }
 
@@ -68,7 +148,7 @@ body {
 }
 
 .admin-header h2 {
-    color: rgba(255, 255, 255, 0.95);
+    color: var(--text-main);
     font-size: 24px;
 }
 
@@ -76,16 +156,17 @@ body {
     font-size: 12px;
     border-radius: 999px;
     padding: 6px 12px;
-    background: rgba(255, 255, 255, 0.16);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: var(--badge-bg);
+    border: 1px solid var(--badge-border);
+    color: var(--badge-text);
 }
 
 .panel {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
     border-radius: 14px;
     padding: 18px;
-    box-shadow: 0 8px 24px rgba(4, 8, 22, 0.15);
+    box-shadow: var(--panel-shadow);
 }
 
 .panel-head {
@@ -98,14 +179,14 @@ body {
 }
 
 .panel-head h3 {
-    color: rgba(255, 255, 255, 0.94);
+    color: var(--text-main);
     font-size: 18px;
     font-weight: 600;
 }
 
 .status {
     margin-top: 14px;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--text-soft);
     font-size: 13px;
     min-height: 20px;
     line-height: 1.4;
@@ -119,18 +200,18 @@ body {
 .field span {
     display: block;
     margin-bottom: 6px;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--text-soft);
     font-size: 13px;
 }
 
 .field input,
-.field select,
-.field textarea {
+.field textarea,
+.combo {
     width: 100%;
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border: 1px solid var(--input-border);
     border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.08);
-    color: #fff;
+    background-color: var(--input-bg);
+    color: var(--input-text);
     padding: 12px 14px;
     font-size: 14px;
     outline: none;
@@ -138,10 +219,10 @@ body {
 }
 
 .field input:focus,
-.field select:focus,
-.field textarea:focus {
-    border-color: rgba(255, 255, 255, 0.55);
-    background-color: rgba(255, 255, 255, 0.16);
+.field textarea:focus,
+.combo:focus {
+    border-color: var(--input-focus-border);
+    background-color: var(--input-focus-bg);
 }
 
 .field textarea {
@@ -149,9 +230,14 @@ body {
     min-height: 95px;
 }
 
+.combo {
+    appearance: textfield;
+    text-overflow: ellipsis;
+}
+
 textarea::placeholder,
 input::placeholder {
-    color: rgba(255, 255, 255, 0.62);
+    color: var(--input-placeholder);
 }
 
 .grid {
@@ -171,8 +257,8 @@ button,
     padding: 11px 14px;
     font-size: 14px;
     font-weight: 600;
-    color: #111;
-    background: rgba(255, 255, 255, 0.95);
+    color: var(--button-primary-text);
+    background: var(--button-primary-bg);
     cursor: pointer;
     transition: transform 0.2s, filter 0.2s;
 }
@@ -183,14 +269,14 @@ button:hover {
 }
 
 .secondary {
-    background: rgba(255, 255, 255, 0.16) !important;
-    border: 1px solid rgba(255, 255, 255, 0.35) !important;
-    color: #fff !important;
+    background: var(--button-secondary-bg) !important;
+    border: 1px solid var(--button-secondary-border) !important;
+    color: var(--button-secondary-text) !important;
 }
 
 .danger {
-    background: rgba(234, 67, 53, 0.86) !important;
-    color: #fff !important;
+    background: var(--button-danger-bg) !important;
+    color: var(--button-danger-text) !important;
 }
 
 .panel-actions {
@@ -215,18 +301,18 @@ button[hidden] {
     padding: 12px;
     border-radius: 10px;
     margin-bottom: 8px;
-    color: #fff;
+    color: var(--text-main);
     font-size: 14px;
 }
 
 .result-row.alive {
-    background-color: rgba(46, 204, 113, 0.2);
-    border: 1px solid rgba(46, 204, 113, 0.45);
+    background-color: var(--result-alive-bg);
+    border: 1px solid var(--result-alive-border);
 }
 
 .result-row.dead {
-    background-color: rgba(231, 76, 60, 0.2);
-    border: 1px solid rgba(231, 76, 60, 0.45);
+    background-color: var(--result-dead-bg);
+    border: 1px solid var(--result-dead-border);
 }
 
 .table-wrap {
@@ -244,8 +330,8 @@ button[hidden] {
 .data-table td {
     text-align: left;
     padding: 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-    color: rgba(255, 255, 255, 0.92);
+    border-bottom: 1px solid var(--table-border);
+    color: var(--table-text);
     font-size: 13px;
     vertical-align: top;
     word-break: break-word;
@@ -254,29 +340,29 @@ button[hidden] {
 .data-table th {
     position: sticky;
     top: 0;
-    background: rgba(20, 24, 48, 0.9);
+    background: var(--table-head-bg);
     z-index: 1;
     font-weight: 600;
 }
 
 .key-name {
-    color: #fff;
+    color: var(--text-main);
     font-weight: 600;
 }
 
 .small {
     font-size: 12px;
-    color: rgba(255, 255, 255, 0.75);
+    color: var(--text-soft-3);
 }
 
 .muted {
-    color: rgba(255, 255, 255, 0.76);
+    color: var(--table-text-muted);
 }
 
 .action-link {
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.32);
-    color: #fff;
+    border: 1px solid var(--button-secondary-border);
+    color: var(--text-main);
     font-size: 12px;
     padding: 6px 10px;
 }
