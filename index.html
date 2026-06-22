@@ -3,27 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Check multiple Gemini API keys from your browser.">
-    <meta name="theme-color" content="#6f6fd5">
+    <meta name="description" content="Admin-style Gemini API key checker with local and indexed storage.">
+    <meta name="theme-color" content="#0f172a">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="msapplication-TileColor" content="#0f172a">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icons/icon-192.png">
     <title>Gemini API Key Checker</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Gemini API Key Checker</h1>
-        <p id="status" class="status" role="status" aria-live="polite"></p>
-        <textarea id="apiKeys" placeholder="Enter API keys, one per line"></textarea>
-        <select id="modelSelector">
-            <option value="gemini-2.5-flash">gemini-2.5-flash</option>
-            <option value="gemini-2.5-pro">gemini-2.5-pro</option>
-        </select>
-        <button id="installBtn" type="button" class="secondary" hidden>Install app</button>
-        <button id="checkKeys">Check Keys</button>
-        <div id="results"></div>
+    <div class="app-shell">
+        <aside class="admin-sidebar">
+            <h1>Gemini Key Admin</h1>
+            <p class="muted">Offline-ready checker for API keys with local settings and indexed history.</p>
+            <div class="sidebar-group">
+                <button id="installBtn" class="secondary" type="button" hidden>Install app</button>
+                <button id="clearAllBtn" type="button" class="danger">Clear Local Data</button>
+            </div>
+            <p id="status" class="status" role="status" aria-live="polite"></p>
+            <div class="sidebar-footer">
+                <small>Stored in browser: <strong>localStorage</strong> + <strong>IndexedDB</strong></small>
+            </div>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-header">
+                <h2>Admin Panel</h2>
+                <span id="connectionState" class="badge">Checking connection...</span>
+            </header>
+
+            <section class="panel">
+                <div class="panel-head">
+                    <h3>Key Storage (localStorage)</h3>
+                    <div class="panel-actions">
+                        <button id="checkEnabledBtn" type="button">Run Enabled Checks</button>
+                        <button id="clearResultsBtn" type="button" class="secondary">Clear History View</button>
+                    </div>
+                </div>
+                <div class="grid two">
+                    <label class="field">
+                        <span>Model</span>
+                        <select id="modelSelector">
+                            <option value="gemini-2.5-flash">gemini-2.5-flash</option>
+                            <option value="gemini-2.5-pro">gemini-2.5-pro</option>
+                        </select>
+                    </label>
+                    <label class="field">
+                        <span>Alias</span>
+                        <input id="keyAlias" type="text" placeholder="e.g. team-key-01">
+                    </label>
+                </div>
+                <label class="field">
+                    <span>API Key</span>
+                    <input id="keyInput" type="password" placeholder="Enter one API key">
+                </label>
+                <div class="panel-actions">
+                    <button id="addKeyBtn" type="button">Add / Update Key</button>
+                    <button id="importBtn" type="button" class="secondary">Import Bulk</button>
+                </div>
+                <label class="field">
+                    <span>Bulk input</span>
+                    <textarea id="bulkKeys" placeholder="Paste one key per line. Optional: alias|key"></textarea>
+                </label>
+                <div class="table-wrap">
+                    <table class="data-table" id="keysTable" aria-label="Stored API key list">
+                        <thead>
+                            <tr>
+                                <th><input id="toggleAllKeys" type="checkbox" aria-label="Toggle all keys"></th>
+                                <th>Alias</th>
+                                <th>Key</th>
+                                <th>Model</th>
+                                <th>Last check</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="keysBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="panel">
+                <div class="panel-head">
+                    <h3>Run Results</h3>
+                    <div class="panel-actions">
+                        <button id="runSelectedBtn" type="button">Run Checked</button>
+                        <button id="deleteCheckedBtn" type="button" class="danger">Delete Checked</button>
+                    </div>
+                </div>
+                <div id="results" class="results"></div>
+            </section>
+
+            <section class="panel">
+                <div class="panel-head">
+                    <h3>History (IndexedDB)</h3>
+                    <button id="clearHistoryBtn" type="button" class="secondary">Clear History</button>
+                </div>
+                <div class="table-wrap">
+                    <table class="data-table" id="historyTable" aria-label="Run history">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Alias</th>
+                                <th>Key</th>
+                                <th>Model</th>
+                                <th>Status</th>
+                                <th>Info</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyBody"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
     </div>
     <script src="script.js"></script>
 </body>

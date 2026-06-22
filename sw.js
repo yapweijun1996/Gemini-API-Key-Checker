@@ -1,4 +1,4 @@
-const CACHE_NAME = 'gemini-key-checker-v1';
+const CACHE_NAME = 'gemini-key-checker-v2';
 const APP_SHELL = [
   './',
   './index.html',
@@ -6,7 +6,7 @@ const APP_SHELL = [
   './script.js',
   './manifest.json',
   './icons/icon-192.png',
-  './icons/icon-512.png'
+  './icons/icon-512.png',
 ];
 
 self.addEventListener('install', (event) => {
@@ -28,28 +28,42 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+function isNavigationRequest(request) {
+  return request.mode === 'navigate' || request.headers.get('Accept')?.includes('text/html');
+}
+
+function isSameOrigin(url) {
+  return new URL(url).origin === self.location.origin;
+}
+
 self.addEventListener('fetch', (event) => {
-  const requestURL = new URL(event.request.url);
-  if (requestURL.origin !== self.location.origin || event.request.method !== 'GET') {
+  const request = event.request;
+
+  if (!isSameOrigin(request.url) || request.method !== 'GET') {
+    return;
+  }
+
+  if (isNavigationRequest(request)) {
+    event.respondWith(
+      fetch(request)
+        .then((response) => response)
+        .catch(() => caches.match('./index.html'))
+    );
     return;
   }
 
   event.respondWith(
-    caches.match(event.request).then((cached) => {
-      if (cached) {
-        return cached;
-      }
+    caches.match(request).then((cachedResponse) => {
+      const fetchAndCache = fetch(request).then((networkResponse) => {
+        if (!networkResponse || !networkResponse.ok) {
+          return networkResponse;
+        }
+        const responseCopy = networkResponse.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(request, responseCopy));
+        return networkResponse;
+      });
 
-      return fetch(event.request)
-        .then((response) => {
-          if (!response || !response.ok) {
-            return response;
-          }
-          const responseToCache = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseToCache));
-          return response;
-        })
-        .catch(() => caches.match('./index.html'));
+      return cachedResponse || fetchAndCache;
     })
   );
 });
