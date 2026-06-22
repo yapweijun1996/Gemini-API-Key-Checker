@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Check multiple Gemini API keys from your browser.">
+    <meta name="theme-color" content="#6f6fd5">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <title>Gemini API Key Checker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Gemini API Key Checker</h1>
+        <p id="status" class="status" role="status" aria-live="polite"></p>
+        <textarea id="apiKeys" placeholder="Enter API keys, one per line"></textarea>
+        <select id="modelSelector">
+            <option value="gemini-2.5-flash">gemini-2.5-flash</option>
+            <option value="gemini-2.5-pro">gemini-2.5-pro</option>
+        </select>
+        <button id="installBtn" type="button" class="secondary" hidden>Install app</button>
+        <button id="checkKeys">Check Keys</button>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

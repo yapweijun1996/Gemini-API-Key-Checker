@@ -1,0 +1,162 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #f0f2f5;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgb(111, 111, 213) 0%, rgb(16, 18, 117) 90.1%);
+}
+
+.container {
+    width: 95%;
+    max-width: 650px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+}
+
+h1 {
+    text-align: center;
+    color: #fff;
+    font-weight: 600;
+    margin-bottom: 30px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.status {
+    min-height: 20px;
+    margin-bottom: 14px;
+    text-align: center;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+textarea, select {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font-size: 16px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+textarea::placeholder, select {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+textarea:focus, select:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+textarea {
+    height: 160px;
+    resize: vertical;
+}
+
+button.secondary {
+    width: 100%;
+    margin-bottom: 12px;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 14px;
+}
+
+select {
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M5%208l5%205%205-5z%22%20fill%3D%22%23FFF%22/%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 1em;
+}
+
+select option {
+    background: #333;
+    color: #fff;
+}
+
+button {
+    width: 100%;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background-color: #fff;
+    transform: translateY(-3px);
+}
+
+button[hidden] {
+    display: none;
+}
+
+#results {
+    margin-top: 30px;
+    max-height: 280px;
+    overflow-y: auto;
+    padding-right: 15px;
+}
+
+.result {
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    font-size: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    word-break: break-all;
+    color: #fff;
+    border: 1px solid transparent;
+}
+
+.alive {
+    background-color: rgba(46, 204, 113, 0.2);
+    border-color: rgba(46, 204, 113, 0.5);
+}
+
+.dead {
+    background-color: rgba(231, 76, 60, 0.2);
+    border-color: rgba(231, 76, 60, 0.5);
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 25px;
+        width: 90%;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    textarea, select, button {
+        padding: 14px;
+        font-size: 14px;
+    }
+}
